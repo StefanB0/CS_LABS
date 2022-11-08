@@ -1,4 +1,4 @@
-# Classical Ciphers
+# Stream and Block Ciphers
 
 ### Course: Cryptography & Security
 ### Author: Boicu Stefan
