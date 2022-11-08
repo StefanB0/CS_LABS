@@ -86,6 +86,7 @@ func fFunction(r uint32, k uint64, expP, p_table []byte) (fblock uint32) {
 	fblock = uint32(permuteBlockUniversal(uint64(sp), p_table[:], 32))
 	return
 }
+
 func sBoxPerm(eRK uint64, sBoxes [8][4][16]byte) (sb uint32) {
 	eRK_Groups := make([]byte, 8)
 	sb = 0
