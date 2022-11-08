@@ -42,15 +42,6 @@ func FindCoprime(phi int64) int64 {
 	return phi - 1
 }
 
-func FindInverse(e, mod int64) int64 {
-	for i := int64(2); i < mod; i++ {
-		if e*i%mod == 1 {
-			return i
-		}
-	}
-	return 0
-}
-
 func Gcd(a, b int64) int64 {
 	for {
 		temp := a % b

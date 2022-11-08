@@ -28,7 +28,7 @@ RC4 produces a pseudorandom stream of bits based on the provided key and then pe
 
 The pseudorandom stream of bits used for encoding is made by first using the Key-Scheduling algorithm (KSA) on the provided key. This mixes the key and results in the initial permutation of bits of length 256. After that the resulting array is fed into the Pseudo random generation algorithm (PRGA) to produce as many bits as needed to encrypt the plaintext.
 
-## Implementation description
+## Implementation
 
 First I make and populate an initial slice s0 with the following function. I'll need it later for PRGA
 
