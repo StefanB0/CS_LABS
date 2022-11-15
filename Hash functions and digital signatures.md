@@ -23,7 +23,9 @@ This laboratory work also has test coverage. Tests prove that the cipher work as
 
 ## Theory
 
-<!-- !write some theory -->
+Hashing functions are a special kind of algorithm that take some data and output a fixed length number. They are defined by two characteristics, irreversibility and uniqueness. It is impossible to get the original data from a hash, and even a small change to the initial data will drastically change the hash. As such it is almost impossible to tamper with data and receive an identical hash afterwards. As such hashes are very useful in verifying the authencity and integrity of data. 
+
+Given the a password it is trivial to find its hash, but you cannot do the reverse. As such most databses store only the hashes of passwords, and not the passwords themselves, so in case of a breach they woulnd't be leaked. Unfortunately criminals might try to crack the password using a dictionary attack. If they hashed a lot of common passwords, they could match them to the stolen password hashes and find them out this way. To prevent this an additional technique called salting is used. This involves adding a salt to the password before hashing and making a dictionary attack much harder.
 
 ## Implementation
 
@@ -77,7 +79,7 @@ func (db *database) CheckPassword(login, pass string) bool {
 
 ## Theory
 
-<!-- !write some theory -->
+Digital signatures are used to verify the validity of online communication. The message is hashed and then encrypted using an asymetric algorithm. The result is the signature which is appended to the message and sent over the network. The receiver uses the public key to decrypt the hash, then compares it to the hash of the message. If the hashes are equal and the public key is valid, the receiver can be assured that the message was not tampered on.
 
 ## Implementation
 
