@@ -7,29 +7,29 @@ import (
 
 const SALT_SIZE = 32
 
-type database struct {
+type Database struct {
 	loginDictionary map[string]int
 	passwordsHash   []string
 	salts           []string
 }
 
-func NewDB() *database {
-	db := new(database)
+func NewDB() *Database {
+	db := new(Database)
 	db.loginDictionary = make(map[string]int)
 	db.passwordsHash = []string{}
 	db.salts = []string{}
 	return db
 }
 
-func (db *database) getPass(login string) string {
+func (db *Database) getPass(login string) string {
 	return db.passwordsHash[db.loginDictionary[login]]
 }
 
-func (db *database) getSalt(login string) string {
+func (db *Database) getSalt(login string) string {
 	return db.salts[db.loginDictionary[login]]
 }
 
-func (db *database) Add(login, password string) {
+func (db *Database) Add(login, password string) {
 	hpassword, salt := saltHashPassword(password)
 
 	db.loginDictionary[login] = len(db.passwordsHash)
@@ -37,7 +37,7 @@ func (db *database) Add(login, password string) {
 	db.salts = append(db.salts, string(salt))
 }
 
-func (db *database) CheckPassword(login, pass string) bool {
+func (db *Database) CheckPassword(login, pass string) bool {
 	pass1 := db.getPass(login)
 	pass2 := sha256.Sum256([]byte(pass + db.getSalt(login)))
 	return pass1 == string(pass2[:])
