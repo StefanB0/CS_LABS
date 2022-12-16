@@ -3,6 +3,6 @@ package main
 import "CS/Cryptography/webservice"
 
 func main() {
-	web := webservices.NewWebServer()
+	web := webservice.NewWebServer()
 	web.StartServer()
 }

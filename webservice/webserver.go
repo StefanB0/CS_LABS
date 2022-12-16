@@ -1,19 +1,24 @@
-package webservices
+package webservice
 
 import (
 	"CS/Cryptography/database"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 const (
-	ADMIN = "ADMIN"
+	ADMIN       = "ADMIN"
 	NORMAL_USER = "NORMAL_USER"
 )
 
 type WebServer struct {
-	userDB *database.Database
+	userDB    *database.Database
 	sessionDB UserTokens
+
 	roleDB map[string]string
+	codeDB map[string]int
+
 	http.Server
 }
 
@@ -22,11 +27,14 @@ func NewWebServer() *WebServer {
 }
 
 func (s *WebServer) StartServer() {
+	rand.Seed(time.Now().UnixMicro())
+	
 	s.userDB = database.NewDB()
 	s.roleDB = make(map[string]string)
+	s.codeDB = make(map[string]int)
 	s.CreateUsers()
+	s.readCredentials()
 	s.inithandlers()
-
 }
 
 func (s *WebServer) CreateUsers() {

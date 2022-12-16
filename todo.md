@@ -2,6 +2,6 @@
 - user log in. user must log in before using the caesar cipher
 - user authorization
 - mfa, send sms after user logs in with password, to finish logging in the user must send the code
-- bash scripts to test the whole project
+- postman
 - extend functional to playfair and viginere cipher
 - (optional) make CLI client application

@@ -1,4 +1,4 @@
-package webservices
+package webservice
 
 import (
 	classical "CS/Cryptography/classicalCiphers"
@@ -6,8 +6,10 @@ import (
 	"errors"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type loginRequest struct {
@@ -73,11 +75,7 @@ func (s *WebServer) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var loginReq loginRequest
 	json.Unmarshal(reqBody, &loginReq)
-
-	if !s.userDB.CheckPassword(loginReq.Login, loginReq.Password) {
-		w.Write([]byte("Invalid name or password"))
-		return
-	} else {
+	if loginReq.Code != 0 && loginReq.Code == s.codeDB[loginReq.Login]{
 		token := generateToken(loginReq.Login)
 		s.sessionDB.Add(*token)
 
@@ -86,6 +84,18 @@ func (s *WebServer) loginHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Server could not write token to JSON: %s\n", err)
 		}
 		w.Write(tokenJson)
+		return
+	}
+
+	if !s.userDB.CheckPassword(loginReq.Login, loginReq.Password) {
+		w.Write([]byte("Invalid name or password"))
+		return
+	} else {
+		code := rand.Intn(1000-100)+100
+		s.codeDB[loginReq.Login] = code
+		codeString := strconv.Itoa(code)
+		s.sendEmail(codeString, "stfnbcx@gmail.com")
+		w.Write([]byte("A code was sent to your email"))
 	}
 }
 

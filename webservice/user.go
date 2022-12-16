@@ -1,9 +1,9 @@
-package webservices
+package webservice
 
 import "errors"
 
 type User struct {
-	ID int
+	ID   int
 	Name string
 	Role string
 }
